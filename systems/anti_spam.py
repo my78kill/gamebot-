@@ -5,7 +5,6 @@ spam_tracker = {}
 SPAM_LIMIT = 5
 TIME_WINDOW = 3
 
-
 def is_spam(user_id):
     now = time.time()
 
@@ -14,13 +13,15 @@ def is_spam(user_id):
 
     spam_tracker[user_id].append(now)
 
-    # purane timestamps remove
     spam_tracker[user_id] = [
         t for t in spam_tracker[user_id] if now - t < TIME_WINDOW
     ]
 
-    # agar limit cross ho gayi
     if len(spam_tracker[user_id]) > SPAM_LIMIT:
         return True
 
     return False
+
+
+def register(bot):
+    pass

@@ -22,7 +22,6 @@ block.register(bot)
 
 shop.register(bot)
 inventory.register(bot)
-anti_spam.register(bot)
 
 keep_alive()
 bot.infinity_polling()

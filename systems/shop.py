@@ -1,9 +1,10 @@
 from database import users
 
-GUNS = {
-"pistol":{"price":2000,"damage":40},
-"akm":{"price":8000,"damage":60},
-"awm":{"price":12000,"damage":100}
+guns = {
+    "knife": {"price": 500, "damage": 10},
+    "pistol": {"price": 2000, "damage": 40},
+    "akm": {"price": 8000, "damage": 60},
+    "awm": {"price": 12000, "damage": 100}
 }
 
 MEDICO = {

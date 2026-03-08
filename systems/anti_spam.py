@@ -1,27 +1,19 @@
 import time
 
-spam_tracker = {}
+spam = {}
 
-SPAM_LIMIT = 5
-TIME_WINDOW = 3
+def check(user_id):
 
-def is_spam(user_id):
     now = time.time()
 
-    if user_id not in spam_tracker:
-        spam_tracker[user_id] = []
+    if user_id not in spam:
+        spam[user_id] = []
 
-    spam_tracker[user_id].append(now)
+    spam[user_id].append(now)
 
-    spam_tracker[user_id] = [
-        t for t in spam_tracker[user_id] if now - t < TIME_WINDOW
-    ]
+    spam[user_id] = [t for t in spam[user_id] if now-t < 5]
 
-    if len(spam_tracker[user_id]) > SPAM_LIMIT:
-        return True
+    if len(spam[user_id]) > 7:
+        return now + 21600
 
-    return False
-
-
-def register(bot):
-    pass
+    return None

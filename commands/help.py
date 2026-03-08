@@ -4,22 +4,22 @@ def register(bot):
         bot.reply_to(message,
 """
 🎮 Game Commands:
-!status
-!attack
-!kill
-!rob
-!give
-!deposit / !withdraw
-!claim
+/status
+/attack
+/kill
+/rob
+/give
+/deposit / /withdraw
+/claim
 
 🛒 Shop:
-!shop
+/shop
 /use bandage
 /use medkit
 
 🛡 Protection:
-!shield
+/shield
 
 Admin Commands:
-!block
+/block
 """)

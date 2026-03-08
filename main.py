@@ -4,6 +4,8 @@ from keep_alive import keep_alive
 
 from commands import start, help, status, attack, kill, rob, give, bank, claim, shield, block
 from systems import shop, inventory, xp_rank
+from commands import leaderboard
+
 
 bot = telebot.TeleBot(BOT_TOKEN)
 
@@ -19,6 +21,7 @@ bank.register(bot)
 claim.register(bot)
 shield.register(bot)
 block.register(bot)
+leaderboard.register(bot)
 
 shop.register(bot)
 inventory.register(bot)

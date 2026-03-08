@@ -1,16 +1,17 @@
 from flask import Flask
 from threading import Thread
+import os
 
 app = Flask(__name__)
 
-@app.route("/")
+@app.route('/')
 def home():
     return "Game Bot Running"
 
 def run():
-    app.run(host="0.0.0.0", port=8080)
+    port = int(os.environ.get("PORT", 8080))
+    app.run(host='0.0.0.0', port=port)
 
 def keep_alive():
     t = Thread(target=run)
-    t.daemon = True
     t.start()

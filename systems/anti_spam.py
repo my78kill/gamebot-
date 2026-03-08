@@ -1,19 +1,19 @@
 import time
 
-spam = {}
+user_last_message = {}
 
-def check(user_id):
+SPAM_TIME = 1.5
+BLOCK_TIME = 6 * 60 * 60  # 6 hours
+
+def is_spam(user_id):
 
     now = time.time()
 
-    if user_id not in spam:
-        spam[user_id] = []
+    last = user_last_message.get(user_id)
 
-    spam[user_id].append(now)
+    if last and (now - last) < SPAM_TIME:
+        return now + BLOCK_TIME
 
-    spam[user_id] = [t for t in spam[user_id] if now-t < 5]
-
-    if len(spam[user_id]) > 7:
-        return now + 21600
+    user_last_message[user_id] = now
 
     return None

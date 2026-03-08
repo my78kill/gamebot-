@@ -1,34 +1,26 @@
 import time
-from database import users, blocked
 
-user_messages = {}
+spam_tracker = {}
 
-def register(bot):
-    @bot.message_handler(func=lambda m: True)
-    def anti_spam(message):
-        user_id = message.from_user.id
-        if blocked.find_one({"id": user_id}):
-            return
+SPAM_LIMIT = 5
+TIME_WINDOW = 3
 
-        now = time.time()
-        if user_id not in user_messages:
-            user_messages[user_id] = []
-        user_messages[user_id].append(now)
-        user_messages[user_id] = [t for t in user_messages[user_id] if now - t < 10]
 
-        if len(user_messages[user_id]) > 8:
-            blocked.insert_one({"id": user_id, "until": now + 18000}) # 5 hours block
-            bot.reply_to(message,"🚫 Blocked for 5 hours due to spam!")
-            user_messages[user_id] = []
-            return
+def is_spam(user_id):
+    now = time.time()
 
-        # Chat reward pot
-        user = users.find_one({"id": user_id})
-        chats = user.get("chat",0) + 1
-        reward = 0
-        if chats >= 500:
-            chats = 0
-            reward = 1000
-        users.update_one({"id":user_id},{"$set":{"chat":chats},"$inc":{"money":reward}})
-        if reward:
-            bot.reply_to(message,"🎁 500 chats completed! You got 1000 coins")
+    if user_id not in spam_tracker:
+        spam_tracker[user_id] = []
+
+    spam_tracker[user_id].append(now)
+
+    # purane timestamps remove
+    spam_tracker[user_id] = [
+        t for t in spam_tracker[user_id] if now - t < TIME_WINDOW
+    ]
+
+    # agar limit cross ho gayi
+    if len(spam_tracker[user_id]) > SPAM_LIMIT:
+        return True
+
+    return False

@@ -1,12 +1,13 @@
 from database import users
-from config import ADMINS
+from config import ADMINS, OWNER_ID
 
 def register(bot):
 
     @bot.message_handler(commands=['addmoney'])
     def add_money(message):
 
-        if message.from_user.id not in ADMINS:
+        # admin or owner check
+        if message.from_user.id not in ADMINS and message.from_user.id != OWNER_ID:
             bot.reply_to(message, "❌ Admin only command")
             return
 

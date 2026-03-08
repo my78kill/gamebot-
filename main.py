@@ -3,7 +3,7 @@ from config import BOT_TOKEN
 from keep_alive import keep_alive
 
 from commands import start, help, status, attack, kill, rob, give, bank, claim, shield, block
-from systems import shop, inventory, xp_rank, chat_reward, anti_spam
+from systems import shop, inventory, xp_rank
 
 bot = telebot.TeleBot(BOT_TOKEN)
 
@@ -23,5 +23,9 @@ block.register(bot)
 shop.register(bot)
 inventory.register(bot)
 
+# Start keep alive server
 keep_alive()
-bot.infinity_polling()
+
+print("Bot is running...")
+
+bot.infinity_polling(skip_pending=True)

@@ -1,14 +1,11 @@
 import telebot
 from config import BOT_TOKEN
 from keep_alive import keep_alive
+from database import blocked
 
-from commands import start, help, status, attack, kill, rob, give, bank, claim, shield, block
-from systems import shop, inventory, xp_rank
-from commands import leaderboard
-from commands import addmoney
-
-
-
+from commands import start, help, status, attack, kill, rob, give, bank, claim, shield, block, leaderboard, addmoney
+from systems import shop, inventory
+from systems.chat_reward import process_chat   # ← yaha import
 
 bot = telebot.TeleBot(BOT_TOKEN)
 
@@ -29,6 +26,15 @@ addmoney.register(bot)
 
 shop.register(bot)
 inventory.register(bot)
+
+# Chat reward system
+@bot.message_handler(func=lambda m: True)
+def chat_handler(message):
+
+    process_chat(
+        message.from_user.id,
+        message.from_user.first_name
+    )
 
 # Start keep alive server
 keep_alive()
